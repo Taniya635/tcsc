@@ -1,7 +1,11 @@
 // test.js
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
+const express= require("express");
+const mongoose= require("mongoose");
+const cors =require("cors");
+
+const pagesRouter = require('./routes/pages');
+const serviceRouter=require('./routes/services');
+const apiRouter=require('./routes/api');
 
 const app = express();
 app.use(express.json());
@@ -13,63 +17,21 @@ mongoose.connection.on('connected', () => {
   console.log('MongoDB is running and connected successfully');
 });
 
-mongoose.connection.on('error', (err) => {
-  console.error('MongoDB connection error:', err);
-});
-
-const UserSchema=new mongoose.Schema({
-    name:String,
-    location:String,
-    service:String,
-    contact:Number,
-})
-
-const UserModel=mongoose.model('users',UserSchema)
-
-app.get("/getUsers", async (req, res) => {
-  try {
-    const users = await UserModel.find({});
-    res.status(200).json(users);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch users" });
-  }
-    
-});
-
-app.post("/addUser", async (req, res) => {
-    const user=new UserModel(req.body);
-    try {
-        await user.save();
-        res.status(200).json({message: "User added successfully"});
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to add user" });
+app.get("/", (req, res) => {
+  res.json({
+    message:"Welcome to Service Finder",
+    routes:{
+        pages:"pages/home, pages/about,pages/services,pages/contact,pages/register,pages/login",
+        services:"/services/plumbing, services/electrical,services/cleaning,services/carpentery,services/all",
+        api:"/api/users, /api/adduser,/api/updateuser/:id,/api/deleteuser/:id"
     }
-}); 
-
-app.patch("/updateUser/:id", async (req, res) => {
-    const id=req.params.id;
-    try {
-        await UserModel.findByIdAndUpdate(id, req.body);
-        res.status(200).json({message: "User updated successfully"});
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to update user" });
-    }
+  })
 });
 
-app.delete("/deleteUser/:id", async (req, res) => {
-    const id=req.params.id;
-    try {
-        await UserModel.findByIdAndDelete(id);
-        res.status(200).json({message: "User deleted successfully"});
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to delete user" });
-    }
-});
+app.use('/pages',pagesRouter);
+app.use('/services',serviceRouter);
+app.use('/api',apiRouter);
 
-app.listen(5000, () => {
-    console.log("Running on 5000");
+app.listen(4000, () => {
+    console.log("Running on 4000");
 });
