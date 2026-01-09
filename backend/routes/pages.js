@@ -25,4 +25,8 @@ router.get('/login',(req,res)=>{
     res.json({page:"Login",message:"Login"})
 })
 
+router.get('/pgNotFound',(req,res)=>{
+    res.json({page:"PageNotFound",message:"Page not found"})
+})
+
 module.exports=router
