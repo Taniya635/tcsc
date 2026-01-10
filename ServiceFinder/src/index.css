@@ -1,1 +1,38 @@
 @import "tailwindcss";
+
+
+/* Wrapper */
+.card-wrapper {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* Moving rows */
+.card-trackLeft,
+.card-trackRight {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: slide 10s linear infinite;
+}
+
+/* Opposite direction */
+.card-trackRight {
+  animation-direction: reverse;
+}
+
+/* 🔥 PAUSE ON HOVER (CORRECT WAY) */
+.card-wrapper:hover .card-trackLeft,
+.card-wrapper:hover .card-trackRight {
+  animation-play-state: paused;
+}
+
+/* Animation */
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-20%);
+  }
+}
