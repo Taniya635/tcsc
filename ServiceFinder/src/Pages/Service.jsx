@@ -1,13 +1,16 @@
-import React from 'react'
-import { FaFilter } from "react-icons/fa";
+import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import Card from '../components/Card';
 import Footer from '../components/Footer';
-import {Link} from 'react-router-dom'
-
 
 function Service() {
 
+  const [search, setSearch] = useState("");
+
+  const handleSearchChange = (e) => {  
+    setSearch(e.target.value);
+    console.log('Search Input:', e.target.value);
+  } 
 
   const servicesData = [
     {
@@ -262,7 +265,7 @@ function Service() {
         Available Services Near You
       </h2>
 
-      {/* Subheading */}
+      {/* paragraph */}
       <p className="text-gray-600 text-center max-w-2xl mx-auto mb-10">
         Explore trusted professionals in your area. Search, filter, and book
         services based on ratings, availability, and location.
@@ -276,6 +279,8 @@ function Service() {
           <IoSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-700 text-xl" />
           <input
             type="text"
+            value={search}
+            onChange={handleSearchChange}
             placeholder="Search electricians, plumbers, tutors..."
             className="h-12 w-full pl-12 pr-4 rounded-full border text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-blue-600"
           />
@@ -284,33 +289,22 @@ function Service() {
       
       </div>
 
-      {/* Helper Text */}
+      {/* paragraph */}
       <p className="text-sm text-gray-500 text-center mb-12">
         Showing top-rated service providers near your location
       </p>
 
-      {/* Services flex */}
+      {/* card  div*/}
       <div className="flex items-center justify-center shrink flex-wrap gap-10 place-items-center">
-        {servicesData.length > 0 ? (
-          servicesData.map((elem, idx) => (
+        {servicesData.map((elem, idx) => (
             <Card data={elem} key={idx} idx={idx} />
-          ))
-        ) : (
-          <div className="col-span-full text-center mt-10">
-            <h3 className="text-xl font-semibold text-gray-700">
-              No services found
-            </h3>
-            <p className="text-gray-500 mt-2">
-              Try changing your search or filter options.
-            </p>
-          </div>
-        )}
+          ))}
       </div>
 
-      {/* Trust Section */}
+      {/*  text */}
       <div className="text-center text-gray-600 mt-20">
         <p className="font-medium">
-          ✔ Verified Professionals ✔ Real Reviews  ✔ Quick Booking
+           Verified Professionals | Real Reviews | Quick Booking
         </p>
         <p className="mt-2 text-sm">
           Your local services, simplified.

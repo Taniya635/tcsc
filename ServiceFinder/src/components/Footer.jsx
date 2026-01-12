@@ -3,63 +3,71 @@ import { FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
 
 function Footer() {
   return (
-     <footer className="w-full  border-gray-200 bg-white my-20">
-      <div className="max-w-3xl mx-auto px-6 py-5 border-t">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div className="w-full bg-white my-20">
 
-          {/* SUPPORT */}
+      {/* container div */}
+      <div className="w-3xl mx-auto px-6 py-10 border-t " >
+
+        {/* element div */}
+        <div className="flex flex-wrap items-start justify-center gap-12 text-sm ">
+
+          {/* support */}
           <div>
-            <p className="text-sm tracking-widest text-gray-400 mb-4">
+            <p className="tracking-widest text-gray-400 mb-4 hover:text-gray-600 transition">
               SUPPORT
             </p>
             <ul className="space-y-3 text-gray-700">
-              <li className="hover:text-black cursor-pointer">Contact Us</li>
-              <li className="hover:text-black cursor-pointer">Help Center</li>
-              <li className="hover:text-black cursor-pointer"></li>
+              <li className="cursor-pointer transition hover:text-blue-600 hover:translate-x-1">
+                Contact Us
+              </li>
+              <li className="cursor-pointer transition hover:text-blue-600 hover:translate-x-1">
+                Help Center
+              </li>
             </ul>
           </div>
 
-          {/* COMPANY */}
+          {/* company */}
           <div>
-            <p className="text-sm tracking-widest text-gray-400 mb-4">
+            <p className="tracking-widest text-gray-400 mb-4 hover:text-gray-600 transition">
               COMPANY
             </p>
             <ul className="space-y-3 text-gray-700">
-              <li className="hover:text-black cursor-pointer">
-                Become a FindService Professional
+              <li className="cursor-pointer transition hover:text-blue-600 hover:translate-x-1">
+                Become a Professional
               </li>
-              <li className="hover:text-black cursor-pointer">Careers</li>
-             
+              <li className="cursor-pointer transition hover:text-blue-600 hover:translate-x-1">
+                Careers
+              </li>
             </ul>
           </div>
 
-          {/* LEGAL */}
+          {/* legal */}
           <div>
-            <p className="text-sm tracking-widest text-gray-400 mb-4">
+            <p className="tracking-widest text-gray-400 mb-4 hover:text-gray-600 transition">
               LEGAL
             </p>
             <ul className="space-y-3 text-gray-700">
-              <li className="hover:text-black cursor-pointer">
+              <li className="cursor-pointer transition hover:text-blue-600 hover:translate-x-1">
                 Terms & Conditions
               </li>
-              <li className="hover:text-black cursor-pointer">
+              <li className="cursor-pointer transition hover:text-blue-600 hover:translate-x-1">
                 Privacy Policy
               </li>
             </ul>
           </div>
 
-          {/* SOCIAL ICONS */}
-          <div className="flex md:justify-end items-start gap-4">
-            <FaLinkedinIn className='cursor-pointer hover:scale-110' />
-           <FaFacebookF className='cursor-pointer hover:scale-110'/>
-            <FaInstagram className='cursor-pointer hover:scale-110' />
+          {/* social icon*/}
+          <div className="flex items-center gap-4 text-gray-600">
+            <FaLinkedinIn className="cursor-pointer transition hover:text-blue-600 hover:scale-150" />
+            <FaFacebookF className="cursor-pointer transition hover:text-blue-600 hover:scale-150" />
+            <FaInstagram className="cursor-pointer transition hover:text-pink-500 hover:scale-150" />
           </div>
 
         </div>
-
-      
       </div>
-    </footer>
+
+    </div>
+
   )
 }
 

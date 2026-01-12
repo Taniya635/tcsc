@@ -18,7 +18,7 @@ function Navbar() {
       <div className="flex gap-6 font-medium ">
         <NavLink
           to="/"
-          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded  ${isActive ? 'text-blue-700 border-blue-700 border-2'
+          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded  hover:text-blue-700  ${isActive ? 'text-blue-700 border-blue-700 border-2'
             : 'text-gray-700'}`
           }
         >
@@ -27,7 +27,7 @@ function Navbar() {
 
         <NavLink
           to="/service"
-          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded  ${isActive ? 'text-blue-700 border-blue-700 border-2'
+          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded hover:text-blue-700  ${isActive ? 'text-blue-700 border-blue-700 border-2'
             : 'text-gray-700'}`
           }
         >
@@ -36,7 +36,7 @@ function Navbar() {
 
         <NavLink
           to="/about"
-          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded  ${isActive ? 'text-blue-700 border-blue-700 border-2'
+          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded hover:text-blue-700   ${isActive ? 'text-blue-700 border-blue-700 border-2'
             : 'text-gray-700'}`
           }
         >
@@ -45,7 +45,7 @@ function Navbar() {
 
         <NavLink
           to="/login"
-          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded  ${isActive ? 'text-blue-700 border-blue-700 border-2'
+          className={({ isActive }) => `hover:scale-110 py-2 px-2 font-semibold rounded hover:text-blue-700   ${isActive ? 'text-blue-700 border-blue-700 border-2'
             : 'text-gray-700'}`
           }
         >

@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
-import FeedbackCard from "../components/FeedbackCard";
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -147,7 +146,7 @@ function Home() {
     }
   ];
 
-  function numIncrement () {
+  function numIncrement() {
 
   }
 
@@ -155,26 +154,39 @@ function Home() {
   return (
     <div className=" w-full bg-white">
 
-    {/* top */}
+      {/* top */}
       <div className="h-[70vh]  bg-blue-400 flex items-center justify-center gap-5 overflow-hidden">
         <div className="  flex items-start justify-center flex-col w-[50vw]">
+
+          {/* heading */}
           <h1 className="text-6xl text-white">
             Find Trusted Local Services, Instantly.
           </h1>
+
+          {/* paragraph */}
           <p className="text-white mt-5 ">
             Discover verified professionals near you for electrical, plumbing,
             cleaning, tutoring, and more.
           </p>
+
+          {/* button */}
           <div className="flex gap-5 mt-10">
-            <button className="text-2xl bg-[#F25704] px-9 py-2 rounded-xl text-white border">
-              Sign Up
-            </button>
-            <button className="text-2xl  px-3 py-2 rounded-xl text-white border">
-              Our Services
-            </button>
+            <Link to="/register">
+              <button className="text-2xl bg-[#F25704] px-9 py-2 rounded-xl text-white border hover:scale-105 transition">
+                Sign Up
+              </button>
+            </Link>
+
+            <Link to="/service">
+              <button className="text-2xl  px-3 py-2 rounded-xl text-white border hover:scale-105 transition ">
+                Our Services
+              </button>
+            </Link>
+
           </div>
         </div>
 
+        {/* image */}
         <div className="h-[60vh] mt-15 ">
           <img
             className="h-full object-cover"
@@ -185,57 +197,37 @@ function Home() {
       </div>
 
 
-      {/* card */}
+      {/* card Div*/}
       <div className="w-full flex items-center flex-col mt-10">
+
+        {/* heading */}
         <h1 className="text-6xl text-black font-bold mt-5 text-center">
           Explore Our Services
         </h1>
+
+        {/* paragraph */}
         <p className="text-center text-black mt-5">
           Find skilled and trusted professionals for all your daily needs.
         </p>
 
+        {/* card container */}
         <div className="flex items-center justify-center flex-wrap gap-5 w-[70vw]  my-20 ">
           {servicesData.map((elem, idx) => {
             return <Card data={elem} key={idx} idx={idx} />;
           })}
         </div>
 
-        <Link to='/service' onClick={() => window.scrollTo({top: 0, left: 0,behavior: "smooth" })}>
-        <div className=" px-5 py-3 border-gray-500 border-3 rounded-3xl font-semibold hover:scale-105 transition cursor-pointer"> Browse More Services</div>
-      </Link>
+        {/* browse more services button */}
+        <Link to="/service" onClick={() =>window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}
+          className="inline-flex items-center justify-center px-6 py-3 border-2 border-gray-500 rounded-full font-semibold text-gray-800 transition-all duration-300 hover:scale-105 hover:border-blue-600 hover:text-blue-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-40">
+          Browse More Services
+        </Link>
 
-    </div>
-    
-        
 
-      {/* <div className=" w-full p-5 flex items-center justify-center flex-col">
-        <h1 className="text-6xl text-black font-bold  text-center mt-10">
-          Our Review and Feedback
-        </h1>
-        <p className="text-center text-black mt-5">
-          See how findservice has transformed user's experiences through their
-          own words
-        </p>
+      </div>
 
-        <div className="h-full w-[80vw] p-5 flex justify-center gap-5 mt-10  card-wrapper flex-nowrap ">
-          <div className="card-trackLeft">
-            {feedbackData.map((elem, idx) => {
-              return <FeedbackCard key={idx} data={elem} />;
-            })}
-          </div>
-        </div>
 
-        <div className="h-full w-[80vw] p-5 flex justify-center gap-5 card-wrapper flex-nowrap">
-          <div className="card-trackRight">
-            {feedbackData.map((elem, idx) => {
-              return <FeedbackCard key={idx} data={elem} />;
-            })}
-          </div>
-        </div>
-
-      </div> */}
-
-  <Footer />
+      <Footer />
     </div >
   );
 }

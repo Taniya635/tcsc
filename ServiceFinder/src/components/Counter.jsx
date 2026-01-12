@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+// copy from gpt
+ 
 function Counter({ end, duration  }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -40,3 +42,5 @@ function Counter({ end, duration  }) {
 }
 
 export default Counter;
+
+
