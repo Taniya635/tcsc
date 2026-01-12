@@ -81,75 +81,81 @@ function Home() {
   ];
 
   const feedbackData = [
-  {
-    id: 1,
-    name: "Vishal Yadav",
-    location: "Kandivali, Mumbai",
-    image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36",
-    feedback:
-      "The service was smooth and reliable. I found a professional within minutes."
-  },
-  {
-    id: 2,
-    name: "Neha Sharma",
-    location: "Andheri, Mumbai",
-    image: "https://images.unsplash.com/photo-1544725176-7c40e5a2c9f9",
-    feedback:
-      "Very user-friendly platform. Booking and communication were seamless."
-  },
-  {
-    id: 3,
-    name: "Rahul Mehta",
-    location: "Borivali, Mumbai",
-    image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
-    feedback:
-      "Quick response and verified professionals. Highly recommended."
-  },
-  {
-    id: 4,
-    name: "Anjali Verma",
-    location: "Thane, Mumbai",
-    image: "https://images.unsplash.com/photo-1607746882042-944635dfe10e",
-    feedback:
-      "Loved the experience. The reviews really helped me choose the right service."
-  },
-  {
-    id: 5,
-    name: "Amit Kulkarni",
-    location: "Mulund, Mumbai",
-    image: "https://images.unsplash.com/photo-1603415526960-f7e0328f7b0a",
-    feedback:
-      "Simple UI and fast results. Saved me a lot of time."
-  },
-  {
-    id: 6,
-    name: "Pooja Nair",
-    location: "Ghatkopar, Mumbai",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
-    feedback:
-      "Customer support was very helpful. Great platform overall."
-  },
-  {
-    id: 7,
-    name: "Karan Malhotra",
-    location: "Malad, Mumbai",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-    feedback:
-      "Professional services at affordable prices. Will use again."
-  },
-  {
-    id: 8,
-    name: "Sneha Patil",
-    location: "Powai, Mumbai",
-    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1",
-    feedback:
-      "Easy booking process and genuine reviews. Very satisfied."
+    {
+      id: 1,
+      name: "Vishal Yadav",
+      location: "Kandivali, Mumbai",
+      image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36",
+      feedback:
+        "The service was smooth and reliable. I found a professional within minutes."
+    },
+    {
+      id: 2,
+      name: "Neha Sharma",
+      location: "Andheri, Mumbai",
+      image: "https://images.unsplash.com/photo-1544725176-7c40e5a2c9f9",
+      feedback:
+        "Very user-friendly platform. Booking and communication were seamless."
+    },
+    {
+      id: 3,
+      name: "Rahul Mehta",
+      location: "Borivali, Mumbai",
+      image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
+      feedback:
+        "Quick response and verified professionals. Highly recommended."
+    },
+    {
+      id: 4,
+      name: "Anjali Verma",
+      location: "Thane, Mumbai",
+      image: "https://images.unsplash.com/photo-1607746882042-944635dfe10e",
+      feedback:
+        "Loved the experience. The reviews really helped me choose the right service."
+    },
+    {
+      id: 5,
+      name: "Amit Kulkarni",
+      location: "Mulund, Mumbai",
+      image: "https://images.unsplash.com/photo-1603415526960-f7e0328f7b0a",
+      feedback:
+        "Simple UI and fast results. Saved me a lot of time."
+    },
+    {
+      id: 6,
+      name: "Pooja Nair",
+      location: "Ghatkopar, Mumbai",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+      feedback:
+        "Customer support was very helpful. Great platform overall."
+    },
+    {
+      id: 7,
+      name: "Karan Malhotra",
+      location: "Malad, Mumbai",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+      feedback:
+        "Professional services at affordable prices. Will use again."
+    },
+    {
+      id: 8,
+      name: "Sneha Patil",
+      location: "Powai, Mumbai",
+      image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1",
+      feedback:
+        "Easy booking process and genuine reviews. Very satisfied."
+    }
+  ];
+
+  function numIncrement () {
+
   }
-];
 
 
   return (
     <div className=" w-full bg-white">
+
+    {/* top */}
       <div className="h-[70vh]  bg-blue-400 flex items-center justify-center gap-5 overflow-hidden">
         <div className="  flex items-start justify-center flex-col w-[50vw]">
           <h1 className="text-6xl text-white">
@@ -160,7 +166,7 @@ function Home() {
             cleaning, tutoring, and more.
           </p>
           <div className="flex gap-5 mt-10">
-            <button className="text-2xl bg-[#F25704] px-3 py-2 rounded-xl text-white border">
+            <button className="text-2xl bg-[#F25704] px-9 py-2 rounded-xl text-white border">
               Sign Up
             </button>
             <button className="text-2xl  px-3 py-2 rounded-xl text-white border">
@@ -178,8 +184,8 @@ function Home() {
         </div>
       </div>
 
-  
 
+      {/* card */}
       <div className="w-full flex items-center flex-col mt-10">
         <h1 className="text-6xl text-black font-bold mt-5 text-center">
           Explore Our Services
@@ -190,15 +196,15 @@ function Home() {
 
         <div className="flex items-center justify-center flex-wrap gap-5 w-[70vw]  my-20 ">
           {servicesData.map((elem, idx) => {
-            return <Card data={elem} key={idx} />;
+            return <Card data={elem} key={idx} idx={idx} />;
           })}
         </div>
 
-        <Link to='/service'>
-          <div className=" px-5 py-3 border-gray-500 border-3 rounded-3xl font-semibold hover:scale-105 transition cursor-pointer"> Browse More Services</div>
-        </Link>
+        <Link to='/service' onClick={() => window.scrollTo({top: 0, left: 0,behavior: "smooth" })}>
+        <div className=" px-5 py-3 border-gray-500 border-3 rounded-3xl font-semibold hover:scale-105 transition cursor-pointer"> Browse More Services</div>
+      </Link>
 
-      </div>
+    </div>
     
         
 
@@ -229,8 +235,8 @@ function Home() {
 
       </div> */}
 
-      <Footer />
-    </div>
+  <Footer />
+    </div >
   );
 }
 

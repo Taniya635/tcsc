@@ -1,14 +1,16 @@
-import { response } from 'express';
 import React from 'react'
-<<<<<<< HEAD
+
 import { Route, Routes } from 'react-router-dom';
-import Card from './components/Card'
+import Card from './components/Card';
 import Navbar from './components/Navbar';
+import CardDetails from './components/CardDetails';
 
 import Home from './Pages/Home';
 import Service from './Pages/Service';
 import About from './Pages/About';
 import Login from './Pages/Login';
+import Register from './Pages/Register';
+
 
 function App() {
 
@@ -19,40 +21,17 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>} />
       <Route path="/service" element={<Service/>} />
+      <Route path="/service/:id" element={<CardDetails/>} />
       <Route path="/about" element={<About/>} />
       <Route path="/login" element={<Login/>} />
+      <Route path="/register" element={<Register/>} />
     </Routes>
 
     </div>
 
     
-=======
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { use } from 'react';
 
 
-function App() {
-  const [backendData, setBackendData] =useState([{}]);
-
-  useEffect(()=>{
-    fetch("/").then(
-      response=> response.json()
-    ).then(
-      data=> {
-        setBackendData(data)
-      }
-    )
-  }, [])
-  return (
-    <div>
-      {(typeof backendData.users === 'undefined') ? (
-        <p>Loading...</p>
-      ):(
-        backendData.users.map((user, i)=>( <p key={i}>{user}</p> ))
-      )}
-    </div>
->>>>>>> 066d812038bb46daacf8bb5fec21358001034507
   )
 }
 

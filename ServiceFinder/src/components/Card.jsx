@@ -1,8 +1,9 @@
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 import { ImLocation2 } from "react-icons/im";
+import {Link} from "react-router-dom"
 
-function Card({ data }) {
+function Card({ data, idx }) {
   return (
     <div className="w-72 bg-white rounded-3xl shadow-md hover:shadow-lg transition p-6">
 
@@ -84,11 +85,14 @@ function Card({ data }) {
       <p className="text-sm text-gray-700 mb-4">{data.description}</p>
 
       {/* Actions */}
-      <div className="flex gap-2">
-        <button className="flex-1 bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700">
+      <div className="flex  justify-center gap-5">
+        
+      <Link to={`service/${idx}`}>
+        <button className="px-2  bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700">
           View Details
         </button>
-        <button className="flex-1 border border-blue-600 text-blue-600 text-sm py-2 rounded-lg hover:bg-blue-50">
+       </Link> 
+        <button className="px-2 border border-blue-600 text-blue-600 text-sm py-2 rounded-lg hover:bg-blue-50">
           Book Now
         </button>
       </div>

@@ -57,10 +57,7 @@ function Footer() {
 
         </div>
 
-        {/* Bottom line */}
-        {/* <div className="mt-15 text-sm text-gray-500 text-center ">
-          FindService © 2026
-        </div> */}
+      
       </div>
     </footer>
   )

@@ -1,4 +1,5 @@
 import React from 'react'
+import Counter from '../components/Counter'
 
 function About() {
   return (
@@ -35,7 +36,9 @@ function About() {
           </div>
 
           <div className="bg-orange-500 text-white rounded-2xl p-10 text-center">
-            <h3 className="text-4xl font-bold">40+</h3>
+            <h3 className="text-4xl font-bold">
+              <Counter end={40} duration={2000}/><span className='font-bold'>+</span>
+              </h3>
             <p className="mt-2">Service Categories</p>
           </div>
 
@@ -114,19 +117,27 @@ function About() {
       <section className="bg-gray-900 text-white py-16">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-center">
           <div>
-            <h3 className="text-3xl font-bold">25K+</h3>
+            <h3 className="text-3xl font-bold">
+               <Counter end={50} duration={5000}/><span className='font-bold'>K+</span>
+            </h3>
             <p className="text-gray-400">Users</p>
           </div>
           <div>
-            <h3 className="text-3xl font-bold">98%</h3>
+            <h3 className="text-3xl font-bold">
+              <Counter end={98} duration={2000}/><span className='font-bold'>%+</span>
+            </h3>
             <p className="text-gray-400">Satisfaction</p>
           </div>
           <div>
-            <h3 className="text-3xl font-bold">20+</h3>
+            <h3 className="text-3xl font-bold">
+              <Counter end={20} duration={5000}/><span className='font-bold'>+</span>
+            </h3>
             <p className="text-gray-400">Cities</p>
           </div>
           <div>
-            <h3 className="text-3xl font-bold">30+</h3>
+            <h3 className="text-3xl font-bold">
+              <Counter end={30} duration={5000}/><span className='font-bold'>K+</span>
+            </h3>
             <p className="text-gray-400">Partners</p>
           </div>
         </div>
