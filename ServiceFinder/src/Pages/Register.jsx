@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { HiOutlineUser, HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Register() {
   const [isWorker, setIsWorker] = useState(false);
@@ -11,29 +11,59 @@ function Register() {
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceLocation, setServiceLocation] = useState("");
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault(); 
 
+    const userData={
+      name:fullname,
+      email:email,
+      password:password,
+      contact:0,
+      ...(isWorker && {
+        service:serviceCategory,
+        location:serviceLocation,
+        statuss:"offline"
+      })
+    }
+  
     console.log('fullname:', fullname);
     console.log('email:', email);
     console.log('password:', password);
 
-    if (isWorker) {
-      console.log('serviceCategory:', serviceCategory);
-      console.log('serviceLocation:', serviceLocation);
-      console.log('Registering as a service provider (worker).');
-    } else {        
-      console.log('Registering as a regular user.');
-    }   
+    try{
+      const response= await fetch("http://localhost:4000/api/adduser",{
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(userData),
+      })
+      const data=await response.json();
 
-    setFullname("");
-    setEmail("");
-    setPassword("");
-    setServiceCategory("");
-    setServiceLocation("");
-    setIsWorker(false);
+      if(response.ok){
+        alert('Registration successful!');
+        console.log('Success:',data);
+
+        setFullname("");
+        setEmail("");
+        setPassword("");
+        setServiceCategory("");
+        setServiceLocation("");
+        setIsWorker(false);
+        
+      }else{
+        alert("Registration failed: "+data.error);
+        console.log('Error:',data.error);
+        
+      }
+    }catch(error){
+      console.log('Error:',error);
+      alert("An error occurred!");
+      
+    }
 
   }
+
 
   return (
     <div className="  h-[80vh] w-[80vw] mt-10 m-auto p-10 flex items-center justify-center  bg-gradient-to-r from-blue-600 to-blue-100 rounded-xl">
@@ -125,10 +155,12 @@ function Register() {
             </div>
 
             {/* Button */}
-            <button type="submit" onClick={submitHandler}
-            className="w-full h-11 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-lg transition">
+            
+              <button type="submit" onClick={submitHandler}
+              className="w-full h-11 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-lg transition">
               {isWorker ? "Register as Worker" : "Register as User"}
             </button>
+            
           </form>
 
           {/* Footer */}

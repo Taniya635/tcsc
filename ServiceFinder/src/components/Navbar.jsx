@@ -7,11 +7,13 @@ function Navbar() {
       
       {/* logo */}
       <div className=" h-10 ">
-        <img
+        <NavLink to="/">
+          <img
           className="h-full w-full object-cover"
           src="public/images/logo.png"
           alt=""
         />
+        </NavLink>
       </div>
 
       {/* navlink */}
