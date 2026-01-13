@@ -13,16 +13,63 @@ function Login() {
     const [showpassword, setShowpassword] = useState(false)
     const [remember, setRemember] = useState(false)
 
-    const subitHandler = (e)=>{
+    const subitHandler = async (e) => {
         e.preventDefault()
 
-        console.log('Email: ', email);
-        console.log('Password: ', password);
-        console.log('remember: ', remember);
+        // Validation
+        if (!email || !password) {
+            alert('Please enter both email and password');
+            return;
+        }
 
-        setEmail('');
-        setPassword('');
-        setRemember(false)
+        console.log('Logging in with email:', email);
+
+        try {
+            const response = await fetch("http://localhost:4000/pages/login", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Login successful!');
+                console.log('Success:', data);
+
+                // Store user data in localStorage
+                localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                if (remember) {
+                    localStorage.setItem('rememberMe', 'true');
+                }
+
+                // Clear form
+                setEmail('');
+                setPassword('');
+                setRemember(false);
+
+                // Redirect based on user type
+                if (data.isWorker) {
+                    console.log('Redirecting to worker dashboard...');
+                    window.location.href = '/worker-dashboard';
+                } else {
+                    console.log('Redirecting to home...');
+                    window.location.href = '/';
+                }
+
+            } else {
+                alert("Login failed: " + data.error);
+                console.log('Error:', data.error);
+            }
+
+        } catch (error) {
+            console.log('Error:', error);
+            alert("An error occurred! Please try again.");
+        }
     }   
 
     return (

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { HiOutlineUser, HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 function Register() {
+  const navigate=useNavigate();
   const [isWorker, setIsWorker] = useState(false);
 
   const [fullname, setFullname] = useState("");
@@ -17,36 +18,46 @@ function Register() {
   const submitHandler = async (e) => {
     e.preventDefault(); 
 
-    const userData={
-      name:fullname,
-      email:email,
-      password:password,
-      contact:0,
+    // Validation
+    if (!fullname || !email || !password) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    if (isWorker && (!serviceCategory || !serviceLocation)) {
+      alert('Please fill in service category and location');
+      return;
+    }
+
+    const userData = {
+      name: fullname,
+      email: email,
+      password: password,
       ...(isWorker && {
-        service:serviceCategory,
-        location:serviceLocation,
-        statuss:"offline"
+        contact: 0,
+        service: serviceCategory,
+        location: serviceLocation,
+        statuss: "offline"
       })
     }
   
-    console.log('fullname:', fullname);
-    console.log('email:', email);
-    console.log('password:', password);
+    console.log('Registering user:', { ...userData, password: '***' });
 
-    try{
-      const response= await fetch("http://localhost:4000/api/adduser",{
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json'
+    try {
+      const response = await fetch("http://localhost:4000/pages/register", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
         },
-        body:JSON.stringify(userData),
+        body: JSON.stringify(userData),
       })
-      const data=await response.json();
+      const data = await response.json();
 
-      if(response.ok){
-        alert('Registration successful!');
-        console.log('Success:',data);
+      if (response.ok) {
+        alert('Registration successful! You can now login.');
+        console.log('Success:', data);
 
+        // Clear form
         setFullname("");
         setEmail("");
         setPassword("");
@@ -54,17 +65,20 @@ function Register() {
         setServiceLocation("");
         setIsWorker(false);
         
-      }else{
-        alert("Registration failed: "+data.error);
-        console.log('Error:',data.error);
+        // Optional: Redirect to login page
+        // window.location.href = '/login';
+        setTimeout(()=>{
+          navigate('/login')
+        },1000)
         
+      } else {
+        alert("Registration failed: " + data.error);
+        console.log('Error:', data.error);
       }
-    }catch(error){
-      console.log('Error:',error);
-      alert("An error occurred!");
-      
+    } catch (error) {
+      console.log('Error:', error);
+      alert("An error occurred! Please try again.");
     }
-
   }
 
 
