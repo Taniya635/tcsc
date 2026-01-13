@@ -1,18 +1,6 @@
-const express=require("express");
-const router=express.Router();
-const mongoose=require("mongoose");
+const UserModel = require('../models/user.model');
 
-const UserSchema=new mongoose.Schema({
-    name:String,
-    location:String,
-    service:String,
-    statuss:String,
-    contact:Number,
-})
-
-const UserModel=mongoose.model('users',UserSchema)
-
-router.get('/users',async(req,res)=>{
+const getAllUsers = async(req,res)=>{
     try{
         const {location,service,statuss,name}=req.query;
 
@@ -39,9 +27,9 @@ router.get('/users',async(req,res)=>{
     }catch(err){
         res.status(500).json({error:"Failed to fetch users"})
     }
-})
+};
 
-router.get('/search', async(req,res)=>{
+const searchUsers = async(req,res)=>{
     try{
         const {q}=req.query;
         if(!q){
@@ -66,9 +54,9 @@ router.get('/search', async(req,res)=>{
         res.status(500).json({error:"Unable to search"});
         
     }
-})
+};
 
-router.post('/adduser',async(req,res)=>{
+const addUser = async(req,res)=>{
     const user=new UserModel(req.body);
     try{
         await user.save();
@@ -77,24 +65,30 @@ router.post('/adduser',async(req,res)=>{
     }catch(err){
         res.status(500).json({error:"Failed to add user"});
     }
-})
+};
 
-router.patch('/updateuser/:id',async(req,res)=>{
+const updateUser = async(req,res)=>{
     try{
         await UserModel.findByIdAndUpdate(req.params.id,req.body);
         res.status(200).json({message:"User updated "})
     }catch(err){
         res.status(500).json({error:"Failed to update user details"});
     }
-})
+};
 
-router.delete('/deleteuser/:id',async(req,res)=>{
+const deleteUser = async(req,res)=>{
     try{
         await UserModel.findByIdAndDelete(req.params.id);
         res.status(200).json({message:"User deleted successfully"})
     }catch(err){
         res.status(500).json({error:"Failed to delete user"});
     }
-})
+};
 
-module.exports=router;
+module.exports = {
+    getAllUsers,
+    searchUsers,
+    addUser,
+    updateUser,
+    deleteUser
+};

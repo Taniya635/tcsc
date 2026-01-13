@@ -3,17 +3,17 @@ import { FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
 
 function Footer() {
   return (
-    <div className="w-full bg-white my-20">
+    <div className="w-full bg-white mt-20 ">
 
       {/* container div */}
-      <div className="w-3xl mx-auto px-6 py-10 border-t " >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 border-t " >
 
         {/* element div */}
-        <div className="flex flex-wrap items-start justify-center gap-12 text-sm ">
+        <div className="flex flex-col sm:flex-row  flex-wrap items-center sm:items-start justify-center sm:justify-between gap-10 text-sm text-center sm:text-left">
 
           {/* support */}
           <div>
-            <p className="tracking-widest text-gray-400 mb-4 hover:text-gray-600 transition">
+            <p className="tracking-widest text-gray-400 mb-4 transition hover:text-gray-600 ">
               SUPPORT
             </p>
             <ul className="space-y-3 text-gray-700">

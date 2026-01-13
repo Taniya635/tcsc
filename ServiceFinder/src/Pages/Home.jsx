@@ -79,106 +79,36 @@ function Home() {
     },
   ];
 
-  const feedbackData = [
-    {
-      id: 1,
-      name: "Vishal Yadav",
-      location: "Kandivali, Mumbai",
-      image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36",
-      feedback:
-        "The service was smooth and reliable. I found a professional within minutes."
-    },
-    {
-      id: 2,
-      name: "Neha Sharma",
-      location: "Andheri, Mumbai",
-      image: "https://images.unsplash.com/photo-1544725176-7c40e5a2c9f9",
-      feedback:
-        "Very user-friendly platform. Booking and communication were seamless."
-    },
-    {
-      id: 3,
-      name: "Rahul Mehta",
-      location: "Borivali, Mumbai",
-      image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
-      feedback:
-        "Quick response and verified professionals. Highly recommended."
-    },
-    {
-      id: 4,
-      name: "Anjali Verma",
-      location: "Thane, Mumbai",
-      image: "https://images.unsplash.com/photo-1607746882042-944635dfe10e",
-      feedback:
-        "Loved the experience. The reviews really helped me choose the right service."
-    },
-    {
-      id: 5,
-      name: "Amit Kulkarni",
-      location: "Mulund, Mumbai",
-      image: "https://images.unsplash.com/photo-1603415526960-f7e0328f7b0a",
-      feedback:
-        "Simple UI and fast results. Saved me a lot of time."
-    },
-    {
-      id: 6,
-      name: "Pooja Nair",
-      location: "Ghatkopar, Mumbai",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
-      feedback:
-        "Customer support was very helpful. Great platform overall."
-    },
-    {
-      id: 7,
-      name: "Karan Malhotra",
-      location: "Malad, Mumbai",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-      feedback:
-        "Professional services at affordable prices. Will use again."
-    },
-    {
-      id: 8,
-      name: "Sneha Patil",
-      location: "Powai, Mumbai",
-      image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1",
-      feedback:
-        "Easy booking process and genuine reviews. Very satisfied."
-    }
-  ];
-
-  function numIncrement() {
-
-  }
 
 
   return (
     <div className=" w-full bg-white">
 
       {/* top */}
-      <div className="h-[70vh]  bg-blue-400 flex items-center justify-center gap-5 overflow-hidden">
-        <div className="  flex items-start justify-center flex-col w-[50vw]">
+      <div className="min-h-[70vh]  bg-blue-400 flex flex-col lg:flex-row  items-center justify-center px-6 lg:px-20 gap-10 overflow-hidden ">
+        <div className="  flex flex-col w-full lg:w-1/2 text-center lg:text-left items-start justify-center  ">
 
           {/* heading */}
-          <h1 className="text-6xl text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl  text-white font-bold">
             Find Trusted Local Services, Instantly.
           </h1>
 
           {/* paragraph */}
-          <p className="text-white mt-5 ">
+          <p className="text-white mt-4 text-sm sm:text-base ">
             Discover verified professionals near you for electrical, plumbing,
             cleaning, tutoring, and more.
           </p>
 
           {/* button */}
-          <div className="flex gap-5 mt-10">
+          <div className="flex   w-full  sm:flex-row gap-10 mt-8 justify-center lg:justify-start">
             <Link to="/register">
-              <button className="text-2xl bg-[#F25704] px-9 py-2 rounded-xl text-white border hover:scale-105 transition">
+              <button className="text-lg bg-[#F25704]  px-8 py-2 rounded-xl text-white border hover:scale-105 transition">
                 Sign Up
               </button>
             </Link>
 
             <Link to="/service">
-              <button className="text-2xl  px-3 py-2 rounded-xl text-white border hover:scale-105 transition ">
+              <button className="text-lg px-5  py-2 rounded-xl text-white border hover:scale-105 transition ">
                 Our Services
               </button>
             </Link>
@@ -187,7 +117,7 @@ function Home() {
         </div>
 
         {/* image */}
-        <div className="h-[60vh] mt-15 ">
+        <div className="hidden lg:block h-[55vh]">
           <img
             className="h-full object-cover"
             src="public/images/worker.png"
@@ -198,28 +128,28 @@ function Home() {
 
 
       {/* card Div*/}
-      <div className="w-full flex items-center flex-col mt-10">
+      <div className="w-full flex flex-col items-center  mt-16 px-4">
 
         {/* heading */}
-        <h1 className="text-6xl text-black font-bold mt-5 text-center">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-black font-bold text-center">
           Explore Our Services
         </h1>
 
         {/* paragraph */}
-        <p className="text-center text-black mt-5">
+        <p className="text-center text-gray-600 mt-4 max-w-xl">
           Find skilled and trusted professionals for all your daily needs.
         </p>
 
         {/* card container */}
-        <div className="flex items-center justify-center flex-wrap gap-5 w-[70vw]  my-20 ">
+        <div className="flex  justify-center flex-wrap gap-6 w-full my-16 lg:w-[70vw] ">
           {servicesData.map((elem, idx) => {
             return <Card data={elem} key={idx} idx={idx} />;
           })}
         </div>
 
         {/* browse more services button */}
-        <Link to="/service" onClick={() =>window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}
-          className="inline-flex items-center justify-center px-6 py-3 border-2 border-gray-500 rounded-full font-semibold text-gray-800 transition-all duration-300 hover:scale-105 hover:border-blue-600 hover:text-blue-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-40">
+        <Link to="/service" onClick={() =>window.scrollTo({ top: 0,  behavior: "smooth" })}
+          className="mb-16 inline-flex items-center justify-center px-6 py-3 border-2 border-gray-500 rounded-full font-semibold text-gray-800 transition duration-100 hover:scale-105 hover:border-blue-600 hover:text-blue-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-40">
           Browse More Services
         </Link>
 

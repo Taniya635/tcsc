@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { HiOutlineUser, HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 function Register() {
+  const navigate=useNavigate();
   const [isWorker, setIsWorker] = useState(false);
 
   const [fullname, setFullname] = useState("");
@@ -11,51 +13,99 @@ function Register() {
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceLocation, setServiceLocation] = useState("");
 
-  const submitHandler = (e) => {
+  const [showpassword, setShowpassword] = useState(false)
+
+  const submitHandler = async (e) => {
     e.preventDefault(); 
 
-    console.log('fullname:', fullname);
-    console.log('email:', email);
-    console.log('password:', password);
+    // Validation
+    if (!fullname || !email || !password) {
+      alert('Please fill in all required fields');
+      return;
+    }
 
-    if (isWorker) {
-      console.log('serviceCategory:', serviceCategory);
-      console.log('serviceLocation:', serviceLocation);
-      console.log('Registering as a service provider (worker).');
-    } else {        
-      console.log('Registering as a regular user.');
-    }   
+    if (isWorker && (!serviceCategory || !serviceLocation)) {
+      alert('Please fill in service category and location');
+      return;
+    }
 
-    setFullname("");
-    setEmail("");
-    setPassword("");
-    setServiceCategory("");
-    setServiceLocation("");
-    setIsWorker(false);
+    const userData = {
+      name: fullname,
+      email: email,
+      password: password,
+      ...(isWorker && {
+        contact: 0,
+        service: serviceCategory,
+        location: serviceLocation,
+        statuss: "offline"
+      })
+    }
+  
+    console.log('Registering user:', { ...userData, password: '***' });
 
+    try {
+      const response = await fetch("http://localhost:4000/pages/register", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData),
+      })
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Registration successful! You can now login.');
+        console.log('Success:', data);
+
+        // Clear form
+        setFullname("");
+        setEmail("");
+        setPassword("");
+        setServiceCategory("");
+        setServiceLocation("");
+        setIsWorker(false);
+        
+        // Optional: Redirect to login page
+        // window.location.href = '/login';
+        setTimeout(()=>{
+          navigate('/login')
+        },1000)
+        
+      } else {
+        alert("Registration failed: " + data.error);
+        console.log('Error:', data.error);
+      }
+    } catch (error) {
+      console.log('Error:', error);
+      alert("An error occurred! Please try again.");
+    }
   }
 
+
   return (
-    <div className="  h-[80vh] w-[80vw] mt-10 m-auto p-10 flex items-center justify-center  bg-gradient-to-r from-blue-600 to-blue-100 rounded-xl">
+    <div className=" flex items-center justify-center mt-20 lg:mt-5">
       
+      {/* container */}
+      <div className="w-full max-w-6xl p-3 rounded-xl md:flex items-center justify-center">
+        
         {/* left side */}
 
-         <div className="w-full lg:w-1/2 bg-white rounded-xl p-6 md:p-10 flex flex-col justify-center">
+         <div className="w-full bg-gray-100 rounded-xl p-10 shadow-2xl z-50 md:w-[50vw] lg:w-[60vw]">
 
           {/* heading */}
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
+          <h2 className="text-3xl md:text-4xl text-gray-800 text-center font-semibold">
             Create Account
           </h2>
-          <p className="text-sm text-gray-500 text-center mb-8">
+          <p className="text-sm text-gray-500 text-center mt-3 mb-6 font-semibold">
             Join FindService to get started
           </p>
 
           {/* form */}
-          <form className="max-w-sm mx-auto w-full">
+          <form>
 
             {/* Name */}
             <div className="relative mb-4">
-              <HiOutlineUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <HiOutlineUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
               <input
                 type="text"
                 placeholder="Full Name"
@@ -67,7 +117,7 @@ function Register() {
 
             {/* Email */}
             <div className="relative mb-4">
-              <HiOutlineMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <HiOutlineMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
               <input
                 type="email"
                 placeholder="Email"
@@ -79,14 +129,22 @@ function Register() {
 
             {/* Password */}
             <div className="relative mb-4">
-              <HiOutlineLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <HiOutlineLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
               <input
-                type="password"
+                type={showpassword ?'text': 'password'}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full h-11 pl-10 pr-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
+
+            <button type='button' onClick={()=>{
+              setShowpassword(!showpassword)
+            }}
+            className="absolute right-5 top-1/2 -translate-y-3 text-gray-500 hover:text-gray-700">
+              {showpassword ?<HiOutlineEyeOff size={20} /> :  <HiOutlineEye size={20} /> }
+            </button>
+
             </div>
 
             {/* Worker Checkbox */}
@@ -125,13 +183,15 @@ function Register() {
             </div>
 
             {/* Button */}
-            <button type="submit" onClick={submitHandler}
-            className="w-full h-11 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:shadow-lg transition">
+            
+              <button type="submit" onClick={submitHandler}
+              className="w-full h-11 bg-blue-700 text-white rounded-lg font-semibold hover:shadow-lg cursor-pointer hover:-translate-y-0.5 tarnslate-all">
               {isWorker ? "Register as Worker" : "Register as User"}
             </button>
+            
           </form>
 
-          {/* Footer */}
+          {/* already have an account */}
           <p className="text-sm text-center text-gray-500 mt-6">
             Already have an account?
             <Link to="/login">
@@ -144,31 +204,29 @@ function Register() {
 
         {/* rigth side */}
 
-         <div className="flex w-1/2 flex-col items-center justify-center text-center">
+         <div className="hidden md:flex min-h-[60vh] lg:flex min-w-[40vw] lg:min-h-[80vh] rounded-xl overflow-hidden items-center justify-center"
+          // bg image
+            style={{ background: "url('https://img.freepik.com/premium-photo/colors-card-template-curve-gradient-abstract-background_608068-9661.jpg?semt=ais_hybrid&w=740&q=80') ", backgroundSize: "cover", backgroundPosition: "center" }}
+         >
 
-        {/* image div */}
-        <div className="w-80 mb-6">
-          <img
-            src="/images/worker.png"
-            alt="Worker"
-            className="w-full h-full object-cover hover:scale-105 transition duration-300"
-          />
-          </div>
-
+        <div className="flex items-center justify-center flex-col px-6">
          {/* heading */}
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">
+          <h2 className="text-2xl font-bold text-white mb-3">
             Join FindService Today
           </h2>
 
           {/* paragraph */}
-          <p className="text-gray-800 max-w-md">
+          <p className="text-white max-w-md text-center">
             Create an account to book trusted local services or register as a
             professional and grow your business with us.
           </p>
+          </div>
+
         </div>
       
           
       </div>
+     </div> 
     
   );
 }
