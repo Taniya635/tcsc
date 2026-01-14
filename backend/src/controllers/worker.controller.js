@@ -2,7 +2,7 @@ const UserModel = require('../models/user.model');
 const BookingModel = require('../models/booking.model');
 const FeedbackModel = require('../models/feedback.model');
 
-// Get worker dashboard statistics
+
 const getWorkerStats = async (req, res) => {
   try {
     const workerId = req.query.workerId;
@@ -11,22 +11,22 @@ const getWorkerStats = async (req, res) => {
       return res.status(400).json({ error: 'Worker ID is required' });
     }
 
-    // Get total bookings
+
     const totalBookings = await BookingModel.countDocuments({ workerId });
     
-    // Get completed jobs
+
     const completedJobs = await BookingModel.countDocuments({ 
       workerId, 
       status: 'completed' 
     });
 
-    // Get average rating
+
     const ratings = await FeedbackModel.find({ workerId });
     const avgRating = ratings.length > 0 
       ? (ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length).toFixed(1)
       : 0;
 
-    // Get total reviews
+
     const reviews = ratings.length;
 
     res.status(200).json({
@@ -45,7 +45,7 @@ const getWorkerStats = async (req, res) => {
   }
 };
 
-// Get worker's bookings
+
 const getWorkerBookings = async (req, res) => {
   try {
     const workerId = req.query.workerId;
@@ -76,7 +76,7 @@ const getWorkerBookings = async (req, res) => {
   }
 };
 
-// Update worker status
+
 const updateWorkerStatus = async (req, res) => {
   try {
     const { workerId, status } = req.body;
@@ -111,7 +111,7 @@ const updateWorkerStatus = async (req, res) => {
   }
 };
 
-// Accept booking
+
 const acceptBooking = async (req, res) => {
   try {
     const { bookingId } = req.body;
@@ -142,7 +142,7 @@ const acceptBooking = async (req, res) => {
   }
 };
 
-// Reject/Cancel booking
+
 const rejectBooking = async (req, res) => {
   try {
     const { bookingId } = req.body;
@@ -173,7 +173,7 @@ const rejectBooking = async (req, res) => {
   }
 };
 
-// Complete booking
+
 const completeBooking = async (req, res) => {
   try {
     const { bookingId } = req.body;

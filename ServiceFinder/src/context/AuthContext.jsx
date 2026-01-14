@@ -1,9 +1,9 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
-// Create the context
+
 const AuthContext = createContext();
 
-// Custom hook to use the Auth context
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -12,7 +12,7 @@ export const useAuth = () => {
   return context;
 };
 
-// Provider component
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,10 +30,10 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // Login function
+
   const login = async (email, password) => {
     try {
-      const response = await fetch("http://localhost:4000/pages/login", {
+      const response = await fetch("https://service-finder-backend.vercel.app/pages/login", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -59,10 +59,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Register function
+
   const register = async (userData) => {
     try {
-      const response = await fetch("http://localhost:4000/pages/register", {
+      const response = await fetch("https://service-finder-backend.vercel.app/pages/register", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -83,10 +83,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout function
+
   const logout = async () => {
     try {
-      await fetch("http://localhost:4000/pages/logout", {
+      await fetch("https://service-finder-backend.vercel.app/pages/logout", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      // Clear state and localStorage
+
       setUser(null);
       setIsLoggedIn(false);
       localStorage.removeItem('user');
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Check if user is a worker
+
   const isWorker = () => {
     return user && user.service ? true : false;
   };

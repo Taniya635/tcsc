@@ -1,14 +1,14 @@
 const UserModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
 
-// Home Page - Get featured workers or statistics
+
 const getHome = async (req, res) => {
     try {
-        // Get total counts for home page statistics
+
         const totalUsers = await UserModel.countDocuments();
         const totalWorkers = await UserModel.countDocuments({ service: { $exists: true } });
         
-        // Get featured workers (online workers)
+
         const featuredWorkers = await UserModel.find({ 
             statuss: 'online',
             service: { $exists: true }
@@ -30,7 +30,7 @@ const getHome = async (req, res) => {
     }
 };
 
-// About Page - Company information
+
 const getAbout = (req, res) => {
     res.status(200).json({
         page: "About",
@@ -44,7 +44,7 @@ const getAbout = (req, res) => {
     });
 };
 
-// Contact Page - Contact information
+
 const getContact = (req, res) => {
     res.status(200).json({
         page: "Contact",
@@ -58,13 +58,13 @@ const getContact = (req, res) => {
     });
 };
 
-// Services Page - List all available service categories
+
 const getServices = async (req, res) => {
     try {
-        // Get unique service categories
+
         const services = await UserModel.distinct('service');
         
-        // Get worker count for each service
+
         const serviceDetails = await Promise.all(
             services.map(async (service) => {
                 const count = await UserModel.countDocuments({ service });
@@ -84,19 +84,19 @@ const getServices = async (req, res) => {
     }
 };
 
-// Register Page - Handle user registration
+
 const postRegister = async (req, res) => {
     try {
         const { name, email, password, contact, service, location, statuss } = req.body;
 
-        // Validate required fields
+
         if (!name || !email || !password) {
             return res.status(400).json({ 
                 error: 'Name, email, and password are required' 
             });
         }
 
-        // Check if user already exists
+
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             return res.status(409).json({ 
@@ -104,10 +104,10 @@ const postRegister = async (req, res) => {
             });
         }
 
-        // Hash password
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create user object
+
         const userData = {
             name,
             email,
@@ -121,7 +121,7 @@ const postRegister = async (req, res) => {
         const newUser = new UserModel(userData);
         await newUser.save();
 
-        // Don't send password back
+
         const userResponse = newUser.toObject();
         delete userResponse.password;
 
@@ -136,7 +136,7 @@ const postRegister = async (req, res) => {
     }
 };
 
-// Get Register Page Info
+
 const getRegister = (req, res) => {
     res.status(200).json({
         page: "Register",

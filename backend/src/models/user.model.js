@@ -9,7 +9,7 @@ const UserSchema=new mongoose.Schema({
     location:{type:String},
     statuss:{type:String, enum:['online','offline'], default:'offline'}
 }, {
-    timestamps: true // Adds createdAt and updatedAt automatically
+    timestamps: true // 
 })
 
 const UserModel=mongoose.model('users',UserSchema)

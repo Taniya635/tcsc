@@ -18,7 +18,7 @@ function WorkerDashboard() {
   });
 
   useEffect(() => {
-    // Redirect if not logged in or not a worker
+
     if (!isLoggedIn) {
       navigate('/login');
       return;
@@ -29,12 +29,12 @@ function WorkerDashboard() {
       return;
     }
 
-    // Load worker's current status
+
     if (user?.statuss) {
       setStatus(user.statuss);
     }
 
-    // Fetch worker stats and bookings from backend
+
     fetchWorkerData();
   }, [isLoggedIn, isWorker, navigate, user]);
 
@@ -42,16 +42,16 @@ function WorkerDashboard() {
     if (!user?._id) return;
 
     try {
-      // Fetch statistics
-      const statsResponse = await fetch(`http://localhost:4000/api/worker/stats?workerId=${user._id}`);
+
+      const statsResponse = await fetch(`https://service-finder-backend.vercel.app/api/worker/stats?workerId=${user._id}`);
       const statsData = await statsResponse.json();
       
       if (statsData.success) {
         setStats(statsData.stats);
       }
 
-      // Fetch bookings
-      const bookingsResponse = await fetch(`http://localhost:4000/api/worker/bookings?workerId=${user._id}`);
+
+      const bookingsResponse = await fetch(`https://service-finder-backend.vercel.app/api/worker/bookings?workerId=${user._id}`);
       const bookingsData = await bookingsResponse.json();
       
       if (bookingsData.success) {
@@ -66,7 +66,7 @@ function WorkerDashboard() {
     if (!user?._id) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/api/worker/status`, {
+      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -119,7 +119,7 @@ function WorkerDashboard() {
 
   const handleAcceptBooking = async (bookingId) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/worker/booking/accept`, {
+      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/booking/accept`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingId })
@@ -141,7 +141,7 @@ function WorkerDashboard() {
 
   const handleRejectBooking = async (bookingId) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/worker/booking/reject`, {
+      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/booking/reject`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingId })
@@ -163,7 +163,7 @@ function WorkerDashboard() {
 
   const handleCompleteBooking = async (bookingId) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/worker/booking/complete`, {
+      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/booking/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingId })
@@ -210,7 +210,7 @@ function WorkerDashboard() {
               </p>
             </div>
             
-            {/* Status Controls */}
+
             <div className="flex flex-col gap-2">
               <span className="text-sm text-blue-100">Your Status:</span>
               <div className="flex gap-2">
@@ -244,10 +244,10 @@ function WorkerDashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Profile Card */}
+
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
             <HiOutlineUser className="text-blue-600" />
@@ -431,7 +431,7 @@ function WorkerDashboard() {
           )}
         </div>
 
-        {/* Quick Actions */}
+
         <div className="bg-white rounded-xl shadow-md p-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</h2>
           <div className="grid md:grid-cols-3 gap-4">

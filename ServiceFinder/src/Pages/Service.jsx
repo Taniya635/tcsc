@@ -19,18 +19,18 @@ function Service() {
     console.log('Search Input:', e.target.value);
   };
 
-  // Fetch services from backend API
+
   const fetchServices = async () => {
     setLoading(true);
     try {
-      // Build query string with filters
+
       const params = new URLSearchParams();
       if (filters.location) params.append('location', filters.location);
       if (filters.service) params.append('service', filters.service);
       if (filters.statuss) params.append('statuss', filters.statuss);
       if (search) params.append('name', search);
 
-      const response = await fetch(`http://localhost:4000/api/users?${params}`);
+      const response = await fetch(`https://service-finder-backend.vercel.app/api/users?${params}`);
       const data = await response.json();
       setServicesData(data.users || []);
     } catch (error) {
@@ -40,7 +40,7 @@ function Service() {
     setLoading(false);
   };
 
-  // Handle filter button click
+
   const handleFilter = () => {
     fetchServices();
   };
@@ -52,7 +52,7 @@ function Service() {
     }
   };
 
-  // Load all services on component mount
+
   useEffect(() => {
     fetchServices();
   }, []);
@@ -61,7 +61,7 @@ function Service() {
   return (
       <div className="pt-24 px-6 min-h-screen bg-gray-50">
 
-      {/* Heading */}
+
       <h2 className="text-5xl font-bold text-gray-800 text-center mb-2">
         Available Services Near You
       </h2>
@@ -72,10 +72,10 @@ function Service() {
         services based on ratings, availability, and location.
       </p>
 
-      {/* Search & Filter */}
+
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
         
-        {/* Search Box */}
+
         <div className="relative w-full max-w-xl">
           <IoSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-700 text-xl" />
           <input
@@ -88,10 +88,10 @@ function Service() {
           />
         </div>
 
-              {/* Filter Dropdowns */}
+
         <div className="flex flex-wrap gap-3 justify-center">
           
-          {/* Location Filter */}
+
           <select 
             value={filters.location}
             onChange={(e) => setFilters({...filters, location: e.target.value})}
@@ -104,7 +104,7 @@ function Service() {
             <option value="Andheri">Andheri</option>
           </select>
 
-          {/* Service Filter */}
+
           <select 
             value={filters.service}
             onChange={(e) => setFilters({...filters, service: e.target.value})}
@@ -117,7 +117,7 @@ function Service() {
             <option value="AC Repair">AC Repair</option>
           </select>
 
-          {/* Status Filter */}
+
           <select 
             value={filters.statuss}
             onChange={(e) => setFilters({...filters, statuss: e.target.value})}
@@ -129,7 +129,7 @@ function Service() {
             <option value="busy">Busy</option>
           </select>
 
-          {/* Apply Filter Button */}
+
           <button 
             onClick={handleFilter}
             className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
@@ -137,7 +137,7 @@ function Service() {
             Apply Filters
           </button>
 
-          {/* Clear Filter Button */}
+
           <button 
             onClick={() => {
               setFilters({ location: "", service: "", statuss: "" });
@@ -152,12 +152,12 @@ function Service() {
 
       </div>
 
-      {/* paragraph */}
+
       <p className="text-sm text-gray-500 text-center mb-12 mt-6">
         Showing top-rated service providers near your location
       </p>
 
-      {/* card  div*/}
+
       <div className="flex items-center justify-center shrink flex-wrap gap-10 place-items-center">
         {loading ? (
           <div className="text-center py-20">
@@ -186,7 +186,7 @@ function Service() {
         </p>
       </div>
 
-      {/* Footer */}
+
       <Footer />
     </div>
 

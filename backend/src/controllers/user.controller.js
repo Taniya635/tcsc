@@ -1,7 +1,7 @@
 const UserModel = require('../models/user.model');
 const BookingModel = require('../models/booking.model');
 
-// Get user dashboard statistics
+
 const getUserStats = async (req, res) => {
   try {
     const userId = req.query.userId;
@@ -10,16 +10,16 @@ const getUserStats = async (req, res) => {
       return res.status(400).json({ error: 'User ID is required' });
     }
 
-    // Get total bookings
+
     const totalBookings = await BookingModel.countDocuments({ userId });
     
-    // Get completed bookings
+
     const completedBookings = await BookingModel.countDocuments({ 
       userId, 
       status: 'completed' 
     });
 
-    // Get pending reviews (completed bookings without reviews)
+
     const pendingReviews = completedBookings; // Simplified for now
 
     res.status(200).json({
@@ -37,11 +37,11 @@ const getUserStats = async (req, res) => {
   }
 };
 
-// Get user's bookings
+
 const getUserBookings = async (req, res) => {
   try {
     const userId = req.query.userId;
-    const status = req.query.status; // optional filter by status
+    const status = req.query.status; 
     
     if (!userId) {
       return res.status(400).json({ error: 'User ID is required' });
@@ -68,7 +68,7 @@ const getUserBookings = async (req, res) => {
   }
 };
 
-// Create new booking
+
 const createBooking = async (req, res) => {
   try {
     const { 
@@ -84,7 +84,7 @@ const createBooking = async (req, res) => {
       description 
     } = req.body;
 
-    // Validation
+
     if (!userId || !workerId || !service || !date || !time) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
@@ -117,7 +117,7 @@ const createBooking = async (req, res) => {
   }
 };
 
-// Cancel booking
+
 const cancelBooking = async (req, res) => {
   try {
     const { bookingId, userId } = req.body;
@@ -126,14 +126,14 @@ const cancelBooking = async (req, res) => {
       return res.status(400).json({ error: 'Booking ID and User ID are required' });
     }
 
-    // Find booking and verify it belongs to the user
+
     const booking = await BookingModel.findOne({ _id: bookingId, userId });
 
     if (!booking) {
       return res.status(404).json({ error: 'Booking not found' });
     }
 
-    // Only allow cancellation if status is pending or confirmed
+
     if (booking.status === 'completed' || booking.status === 'cancelled') {
       return res.status(400).json({ error: 'Cannot cancel this booking' });
     }
@@ -153,7 +153,7 @@ const cancelBooking = async (req, res) => {
   }
 };
 
-// Get saved services (workers user has saved)
+
 const getSavedServices = async (req, res) => {
   try {
     const userId = req.query.userId;
@@ -162,15 +162,15 @@ const getSavedServices = async (req, res) => {
       return res.status(400).json({ error: 'User ID is required' });
     }
 
-    // Get user and their saved services
+
     const user = await UserModel.findById(userId);
     
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // If savedServices field exists in user model
-    // Otherwise, return workers they've booked before
+
+
     const bookings = await BookingModel.find({ userId }).distinct('workerId');
     const savedWorkers = await UserModel.find({ 
       _id: { $in: bookings },

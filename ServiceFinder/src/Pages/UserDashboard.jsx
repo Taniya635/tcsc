@@ -12,19 +12,19 @@ function UserDashboard() {
   const [savedServices, setSavedServices] = useState([]);
 
   useEffect(() => {
-    // Redirect if not logged in
+
     if (!isLoggedIn) {
       navigate('/login');
       return;
     }
 
-    // Redirect workers to their dashboard
+
     if (isWorker) {
       navigate('/worker-dashboard');
       return;
     }
 
-    // Fetch user data from backend
+
     fetchUserData();
   }, [isLoggedIn, isWorker, navigate, user]);
 
@@ -32,12 +32,12 @@ function UserDashboard() {
     if (!user?._id) return;
 
     try {
-      // Fetch statistics
-      const statsResponse = await fetch(`http://localhost:4000/api/user/stats?userId=${user._id}`);
+
+      const statsResponse = await fetch(`https://service-finder-backend.vercel.app/api/user/stats?userId=${user._id}`);
       const statsData = await statsResponse.json();
       
       if (statsData.success) {
-        // Update the bookings count state
+
         const stats = {
           totalBookings: statsData.stats.totalBookings,
           completedBookings: statsData.stats.completedBookings,
@@ -45,16 +45,16 @@ function UserDashboard() {
         };
       }
 
-      // Fetch bookings
-      const bookingsResponse = await fetch(`http://localhost:4000/api/user/bookings?userId=${user._id}`);
+
+      const bookingsResponse = await fetch(`https://service-finder-backend.vercel.app/api/user/bookings?userId=${user._id}`);
       const bookingsData = await bookingsResponse.json();
       
       if (bookingsData.success) {
         setMyBookings(bookingsData.bookings);
       }
 
-      // Fetch saved services
-      const savedResponse = await fetch(`http://localhost:4000/api/user/saved-services?userId=${user._id}`);
+
+      const savedResponse = await fetch(`https://service-finder-backend.vercel.app/api/user/saved-services?userId=${user._id}`);
       const savedData = await savedResponse.json();
       
       if (savedData.success) {
@@ -82,7 +82,7 @@ function UserDashboard() {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`http://localhost:4000/api/user/booking/cancel`, {
+      const response = await fetch(`https://service-finder-backend.vercel.app/api/user/booking/cancel`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -118,7 +118,7 @@ function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header Section */}
+
       <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -136,10 +136,10 @@ function UserDashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Quick Stats */}
+
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between">
@@ -172,7 +172,7 @@ function UserDashboard() {
           </div>
         </div>
 
-        {/* Profile Information */}
+
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
             <HiOutlineUser className="text-purple-600" />
@@ -202,7 +202,7 @@ function UserDashboard() {
           </div>
         </div>
 
-        {/* My Bookings */}
+
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
             <HiOutlineBookmark className="text-purple-600" />
@@ -267,7 +267,7 @@ function UserDashboard() {
           )}
         </div>
 
-        {/* Saved Services */}
+
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
             <HiOutlineHeart className="text-purple-600" />
