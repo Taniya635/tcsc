@@ -1,11 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import { HiX } from "react-icons/hi";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
+  const { user, isLoggedIn, isWorker, logout } = useAuth();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
-  const [open, setOpen] = useState(false)
+  const handleLogout = () => {
+    logout();
+    setOpen(false);
+    navigate('/');
+  };
 
   const linkClass = ({ isActive }) => {
     `block py-2 px-3 font-semibold rounded transition hover:text-blue-700 hover:scale-105
@@ -28,11 +36,33 @@ function Navbar() {
         </NavLink>
 
         {/* desktop */}
-        <div className="hidden md:flex gap-6 font-medium">
+        <div className="hidden md:flex gap-6 font-medium items-center">
           <NavLink to='/' className={linkClass}>Home</NavLink>
           <NavLink to='/service' className={linkClass}>Services</NavLink>
           <NavLink to='about' className={linkClass} >About</NavLink>
-          <NavLink to='login' className={linkClass}>Login</NavLink>
+          {isLoggedIn ? (
+            <>
+              <NavLink 
+                to={isWorker ? '/worker-dashboard' : '/dashboard'} 
+                className={linkClass}
+              >
+                Dashboard
+              </NavLink>
+              <div className="flex items-center gap-4">
+                <span className="text-gray-700 font-semibold">
+                  Welcome, {user?.name || user?.email}
+                </span>
+                <button 
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            </>
+          ) : (
+            <NavLink to='login' className={linkClass}>Login</NavLink>
+          )}
         </div>
 
         {/* menu btn */}
@@ -74,7 +104,28 @@ function Navbar() {
         <NavLink onClick={() => setOpen(false)} to='/' className={`${linkClass} text-2xl rounded-lg px-4 py-2 border-none `} >Home</NavLink>
         <NavLink onClick={() => setOpen(false)} to='/service' className={`${linkClass} text-2xl rounded-lg px-4 py-3 border-none`}>Services</NavLink>
         <NavLink onClick={() => setOpen(false)} to='/about' className={`${linkClass} text-2xl rounded-lg px-4 py-3 border-none`}>About</NavLink>
-        <NavLink onClick={() => setOpen(false)} to='/login' className={`${linkClass} text-2xl rounded-lg px-4 py-3 border-none`}>Login</NavLink>
+        {isLoggedIn ? (
+          <>
+            <NavLink 
+              onClick={() => setOpen(false)} 
+              to={isWorker ? '/worker-dashboard' : '/dashboard'} 
+              className={`${linkClass} text-2xl rounded-lg px-4 py-3 border-none`}
+            >
+              Dashboard
+            </NavLink>
+            <div className="text-2xl text-gray-700 font-semibold px-4 py-3">
+              Welcome, {user?.name || user?.email}
+            </div>
+            <button 
+              onClick={handleLogout}
+              className="text-2xl rounded-lg px-4 py-3 bg-red-600 text-white hover:bg-red-700 transition"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <NavLink onClick={() => setOpen(false)} to='/login' className={`${linkClass} text-2xl rounded-lg px-4 py-3 border-none`}>Login</NavLink>
+        )}
       </div>
     </div> 
 

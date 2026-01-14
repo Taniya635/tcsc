@@ -1,9 +1,23 @@
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 import { ImLocation2 } from "react-icons/im";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Card({ data, idx }) {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBookNow = () => {
+    if (!isLoggedIn) {
+      alert('Please login to book a service');
+      navigate('/login');
+    } else {
+      // Implement booking logic here
+      alert('Booking feature coming soon!');
+    }
+  };
+
   return (
     <div className="w-full sm:w-72 bg-gray-100 rounded-3xl shadow-md hover:shadow-lg transition p-6 sm:p-6">
 
@@ -94,7 +108,10 @@ function Card({ data, idx }) {
         </Link>
 
 
-        <button className="w-full sm:w-auto px-2 border border-blue-600 text-blue-600 text-sm py-2 rounded-lg hover:bg-blue-50">
+        <button 
+          onClick={handleBookNow}
+          className="w-full sm:w-auto px-2 border border-blue-600 text-blue-600 text-sm py-2 rounded-lg hover:bg-blue-50"
+        >
           Book Now
         </button>
         

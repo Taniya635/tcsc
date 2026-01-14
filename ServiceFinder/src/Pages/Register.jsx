@@ -2,9 +2,11 @@ import { useState } from "react";
 import { HiOutlineUser, HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
+import { useAuth } from "../context/AuthContext";
 
 function Register() {
-  const navigate=useNavigate();
+  const { register } = useAuth();
+  const navigate = useNavigate();
   const [isWorker, setIsWorker] = useState(false);
 
   const [fullname, setFullname] = useState("");
@@ -43,41 +45,28 @@ function Register() {
   
     console.log('Registering user:', { ...userData, password: '***' });
 
-    try {
-      const response = await fetch("http://localhost:4000/pages/register", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData),
-      })
-      const data = await response.json();
+    const result = await register(userData);
 
-      if (response.ok) {
-        alert('Registration successful! You can now login.');
-        console.log('Success:', data);
+    if (result.success) {
+      alert(result.message);
+      console.log('Success:', result.user);
 
-        // Clear form
-        setFullname("");
-        setEmail("");
-        setPassword("");
-        setServiceCategory("");
-        setServiceLocation("");
-        setIsWorker(false);
-        
-        // Optional: Redirect to login page
-        // window.location.href = '/login';
-        setTimeout(()=>{
-          navigate('/login')
-        },1000)
-        
-      } else {
-        alert("Registration failed: " + data.error);
-        console.log('Error:', data.error);
-      }
-    } catch (error) {
-      console.log('Error:', error);
-      alert("An error occurred! Please try again.");
+      // Clear form
+      setFullname("");
+      setEmail("");
+      setPassword("");
+      setServiceCategory("");
+      setServiceLocation("");
+      setIsWorker(false);
+      
+      // Redirect to login page
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
+      
+    } else {
+      alert("Registration failed: " + result.message);
+      console.log('Error:', result.message);
     }
   }
 

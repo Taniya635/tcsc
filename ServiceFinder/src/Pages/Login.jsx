@@ -1,12 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from "react";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { useAuth } from '../context/AuthContext';
 
 function Login() {
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -24,51 +27,32 @@ function Login() {
 
         console.log('Logging in with email:', email);
 
-        try {
-            const response = await fetch("http://localhost:4000/pages/login", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
+        const result = await login(email, password);
 
-            const data = await response.json();
-
-            if (response.ok) {
-                alert('Login successful!');
-                console.log('Success:', data);
-
-                // Store user data in localStorage
-                localStorage.setItem('user', JSON.stringify(data.user));
-                localStorage.setItem('isLoggedIn', 'true');
-                
-                if (remember) {
-                    localStorage.setItem('rememberMe', 'true');
-                }
-
-                // Clear form
-                setEmail('');
-                setPassword('');
-                setRemember(false);
-
-                // Redirect based on user type
-                if (data.isWorker) {
-                    console.log('Redirecting to worker dashboard...');
-                    window.location.href = '/worker-dashboard';
-                } else {
-                    console.log('Redirecting to home...');
-                    window.location.href = '/';
-                }
-
-            } else {
-                alert("Login failed: " + data.error);
-                console.log('Error:', data.error);
+        if (result.success) {
+            alert(result.message);
+            console.log('Success:', result.user);
+            
+            if (remember) {
+                localStorage.setItem('rememberMe', 'true');
             }
 
-        } catch (error) {
-            console.log('Error:', error);
-            alert("An error occurred! Please try again.");
+            // Clear form
+            setEmail('');
+            setPassword('');
+            setRemember(false);
+
+            // Redirect based on user type
+            if (result.isWorker) {
+                console.log('Redirecting to worker dashboard...');
+                navigate('/worker-dashboard');
+            } else {
+                console.log('Redirecting to home...');
+                navigate('/');
+            }
+        } else {
+            alert("Login failed: " + result.message);
+            console.log('Error:', result.message);
         }
     }   
 
