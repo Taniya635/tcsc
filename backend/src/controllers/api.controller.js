@@ -4,7 +4,9 @@ const getAllUsers = async(req,res)=>{
     try{
         const {location,service,statuss,name}=req.query;
 
-        const filter={};
+        const filter={
+            service: { $exists: true, $ne: '' } // Only get users who are workers (have service field)
+        };
 
         if(location){
             filter.location={$regex:location, $options:"i"}
@@ -37,6 +39,7 @@ const searchUsers = async(req,res)=>{
         }
 
         const users=await UserModel.find({
+            service: { $exists: true, $ne: '' }, // Only search workers
             $or:[
                 {name:{$regex:q,$options:"i"}},
                 {location:{$regex:q,$options:"i"}},

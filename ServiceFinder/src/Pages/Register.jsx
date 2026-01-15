@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { HiOutlineUser, HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
+import { useAuth } from '../context/AuthContext';
 
 function Register() {
+  const navigate = useNavigate();
+  const { register } = useAuth();
+  
   const [isWorker, setIsWorker] = useState(false);
 
   const [fullname, setFullname] = useState("");
@@ -13,40 +17,33 @@ function Register() {
   const [serviceLocation, setServiceLocation] = useState("");
 
   const [showpassword, setShowpassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const submitHandler = async (e) => {
     e.preventDefault(); 
+    setError('')
+    setLoading(true)
 
-    const userData={
-      name:fullname,
-      email:email,
-      password:password,
-      contact:0,
+    const userData = {
+      name: fullname,
+      email: email,
+      password: password,
+      contact: 0,
       ...(isWorker && {
-        service:serviceCategory,
-        location:serviceLocation,
-        statuss:"offline"
+        service: serviceCategory,
+        location: serviceLocation,
+        statuss: "offline"
       })
     }
-  
-    console.log('fullname:', fullname);
-    console.log('email:', email);
-    console.log('password:', password);
 
-    try{
-      const response= await fetch("http://localhost:4000/api/adduser",{
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify(userData),
-      })
-      const data=await response.json();
+    try {
+      const result = await register(userData);
 
-      if(response.ok){
-        alert('Registration successful!');
-        console.log('Success:',data);
-
+      if (result.success) {
+        alert('Registration successful! Please login.');
+        
+        // Clear form
         setFullname("");
         setEmail("");
         setPassword("");
@@ -54,17 +51,17 @@ function Register() {
         setServiceLocation("");
         setIsWorker(false);
         
-      }else{
-        alert("Registration failed: "+data.error);
-        console.log('Error:',data.error);
-        
+        // Navigate to login page
+        navigate('/login');
+      } else {
+        setError(result.message || 'Registration failed. Please try again.');
       }
-    }catch(error){
-      console.log('Error:',error);
-      alert("An error occurred!");
-      
+    } catch (error) {
+      console.log('Error:', error);
+      setError("An error occurred! Please try again.");
+    } finally {
+      setLoading(false)
     }
-
   }
 
 
@@ -107,6 +104,13 @@ function Register() {
           <p className="text-sm text-gray-500 text-center mt-3 mb-6 font-semibold">
             Join FindService to get started
           </p>
+
+          {/* Error message */}
+          {error && (
+            <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4'>
+              {error}
+            </div>
+          )}
 
           {/* form */}
           <form>
@@ -192,10 +196,14 @@ function Register() {
 
             {/* Button */}
             
-              <button type="submit" onClick={submitHandler}
-              className="w-full h-11 bg-blue-700 text-white rounded-lg font-semibold hover:shadow-lg cursor-pointer hover:-translate-y-0.5 tarnslate-all">
-              {isWorker ? "Register as Worker" : "Register as User"}
-            </button>
+              <button 
+                type="submit" 
+                onClick={submitHandler}
+                disabled={loading}
+                className="w-full h-11 bg-blue-700 text-white rounded-lg font-semibold hover:shadow-lg cursor-pointer hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Registering...' : (isWorker ? "Register as Worker" : "Register as User")}
+              </button>
             
           </form>
 

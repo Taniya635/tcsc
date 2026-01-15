@@ -120,16 +120,16 @@ function UserDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
 
-      <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-12">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center">
-              <HiOutlineUser className="text-6xl text-purple-600" />
+              <HiOutlineUser className="text-6xl text-blue-600" />
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
               Welcome, {user.name}!
             </h1>
-            <p className="text-purple-100 flex items-center justify-center gap-2">
+            <p className="text-blue-100 flex items-center justify-center gap-2">
               <HiOutlineMail />
               {user.email}
             </p>
@@ -156,9 +156,9 @@ function UserDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500 mb-1">Saved Services</p>
-                <p className="text-3xl font-bold text-purple-600">{savedServices.length}</p>
+                <p className="text-3xl font-bold text-blue-700">{savedServices.length}</p>
               </div>
-              <HiOutlineHeart className="text-4xl text-purple-600" />
+              <HiOutlineHeart className="text-4xl text-blue-700" />
             </div>
           </div>
 
@@ -176,12 +176,12 @@ function UserDashboard() {
 
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <HiOutlineUser className="text-purple-600" />
+            <HiOutlineUser className="text-blue-700" />
             Profile Information
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="flex items-start gap-3">
-              <HiOutlineUser className="text-2xl text-purple-600 mt-1" />
+              <HiOutlineUser className="text-2xl text-blue-600 mt-1" />
               <div>
                 <p className="text-sm text-gray-500">Full Name</p>
                 <p className="text-lg font-semibold text-gray-800">{user.name}</p>
@@ -189,7 +189,7 @@ function UserDashboard() {
             </div>
             
             <div className="flex items-start gap-3">
-              <HiOutlineMail className="text-2xl text-purple-600 mt-1" />
+              <HiOutlineMail className="text-2xl text-blue-600 mt-1" />
               <div>
                 <p className="text-sm text-gray-500">Email Address</p>
                 <p className="text-lg font-semibold text-gray-800">{user.email}</p>
@@ -197,7 +197,7 @@ function UserDashboard() {
             </div>
           </div>
           <div className="mt-6">
-            <button className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-semibold">
+            <button className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition font-semibold">
               Edit Profile
             </button>
           </div>

@@ -1,28 +1,51 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from "react";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { useAuth } from '../context/AuthContext';
 
 function Login() {
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [showpassword, setShowpassword] = useState(false)
     const [remember, setRemember] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
 
-    const subitHandler = (e) => {
+    const subitHandler = async (e) => {
         e.preventDefault()
+        setError('')
+        setLoading(true)
 
-        console.log('Email: ', email);
-        console.log('Password: ', password);
-        console.log('remember: ', remember);
-
-        setEmail('');
-        setPassword('');
-        setRemember(false)
+        try {
+            const result = await login(email, password);
+            
+            if (result.success) {
+                // Save remember me preference
+                if (remember) {
+                    localStorage.setItem('rememberMe', 'true');
+                }
+                
+                // Navigate based on user type
+                if (result.isWorker) {
+                    navigate('/worker-dashboard');
+                } else {
+                    navigate('/');
+                }
+            } else {
+                setError(result.message || 'Login failed. Please try again.');
+            }
+        } catch (err) {
+            setError('An error occurred. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -54,6 +77,13 @@ function Login() {
 
                     <h2 className='text-3xl md:text-4xl text-gray-800 text-center font-semibold'>Login please</h2>
                     <p className='text-sm text-gray-500 text-center mt-3 mb-6 font-semibold'>Glad to see you again, Select methods to log in</p>
+
+                    {/* Error message */}
+                    {error && (
+                        <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4'>
+                            {error}
+                        </div>
+                    )}
 
                     {/* form */}
                     <form action=""
@@ -110,7 +140,13 @@ function Login() {
                         </div>
 
                         {/* submit btn */}
-                        <button type='submit' className='w-full h-11 bg-blue-700 text-white rounded-lg font-semibold hover:shadow-lg cursor-pointer hover:-translate-y-0.5 transition-all '>Log in </button>
+                        <button 
+                            type='submit' 
+                            disabled={loading}
+                            className='w-full h-11 bg-blue-700 text-white rounded-lg font-semibold hover:shadow-lg cursor-pointer hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
+                        >
+                            {loading ? 'Logging in...' : 'Log in'}
+                        </button>
 
                         {/* google and apple icon */}
                         <div className='flex gap-4 justify-center mt-5 flex-wrap'>

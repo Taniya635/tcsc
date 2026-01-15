@@ -33,7 +33,10 @@ function Service() {
 
       const response = await fetch(`${API_URL}/api/users?${params}`);
       const data = await response.json();
-      setServicesData(data.users || []);
+      
+      // Filter to only show workers (users with service field)
+      const workers = (data.users || []).filter(user => user.service && user.service.trim() !== '');
+      setServicesData(workers);
     } catch (error) {
       console.error('Error fetching services:', error);
       setServicesData([]);
