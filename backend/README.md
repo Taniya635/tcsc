@@ -4,7 +4,7 @@ This is the backend application for the Service Finder platform, restructured fo
 
 ## Project Structure 
 
-```
+``` 
 backend/
 ├── server.js                           # Main entry point
 ├── package.json                        # Dependencies and scripts
