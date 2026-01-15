@@ -6,20 +6,18 @@ function About() {
   return (
       <div className="bg-white text-gray-800">
 
-
-
-      {/* HERO SECTION */}
-      <section className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white py-24">
+      {/*  top */}
+      <div className="relative bg-blue-600 text-white py-24">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">About Us</h1>
-          <p className="text-gray-300 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             FindService is a modern platform designed to simplify local service discovery.
           </p>
         </div>
-      </section>
+      </div>
 
-      {/* INTRO SECTION */}
-      <section className="py-16">
+      {/* INTRO div */}
+      <div className="py-16">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
           
           <div>
@@ -44,10 +42,10 @@ function About() {
           </div>
 
         </div>
-      </section>
+      </div>
 
       {/* WHY CHOOSE US */}
-      <section className="bg-gray-50 py-16">
+      <div className="bg-gray-50 py-16">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12">
             High Quality & Innovative Platform
@@ -83,16 +81,16 @@ function About() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* SERVICES SECTION */}
-      <section className="py-16">
+      {/* SERVICES div */}
+      <div className="py-16">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12">
             Our Services That We Provide
           </h2>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="flex items-center justify-center flex-wrap gap-6">
             {[
               "Electricians",
               "Plumbers",
@@ -112,68 +110,39 @@ function About() {
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* PROJECTS / PLATFORM STATS */}
-      <section className="bg-gray-900 text-white py-16">
+      {/* stats */}
+      <div className="bg-blue-600 text-white py-16">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-center">
           <div>
             <h3 className="text-3xl font-bold">
                <Counter end={50} duration={5000}/><span className='font-bold'>K+</span>
             </h3>
-            <p className="text-gray-400">Users</p>
+            <p className="text-white">Users</p>
           </div>
           <div>
             <h3 className="text-3xl font-bold">
               <Counter end={98} duration={2000}/><span className='font-bold'>%+</span>
             </h3>
-            <p className="text-gray-400">Satisfaction</p>
+            <p className="text-white">Satisfaction</p>
           </div>
           <div>
             <h3 className="text-3xl font-bold">
               <Counter end={20} duration={5000}/><span className='font-bold'>+</span>
             </h3>
-            <p className="text-gray-400">Cities</p>
+            <p className="text-white">Cities</p>
           </div>
           <div>
             <h3 className="text-3xl font-bold">
               <Counter end={30} duration={5000}/><span className='font-bold'>K+</span>
             </h3>
-            <p className="text-gray-400">Partners</p>
+            <p className="text-white">Partners</p>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* TESTIMONIAL */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-6">Our Happy Users</h2>
-          <p className="text-gray-600">
-            “FindService helped me quickly find a reliable electrician in my area.
-            The experience was smooth and stress-free.”
-          </p>
-          <p className="mt-4 font-semibold">— Verified User</p>
-        </div>
-      </section>
-
-      {/* TEAM */}
-      <section className="bg-gray-50 py-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Meet Our Leadership
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            {["Product Lead", "Tech Lead", "Design Lead"].map((role, i) => (
-              <div key={i} className="bg-white rounded-xl p-6 shadow">
-                <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4"></div>
-                <h4 className="font-semibold">Team Member</h4>
-                <p className="text-sm text-gray-600">{role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
       <Footer />
     </div>
   )

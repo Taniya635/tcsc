@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { HiOutlineUser, HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
-import { useAuth } from "../context/AuthContext";
 
 function Register() {
-  const { register } = useAuth();
-  const navigate = useNavigate();
   const [isWorker, setIsWorker] = useState(false);
 
   const [fullname, setFullname] = useState("");
@@ -20,54 +17,54 @@ function Register() {
   const submitHandler = async (e) => {
     e.preventDefault(); 
 
-    // Validation
-    if (!fullname || !email || !password) {
-      alert('Please fill in all required fields');
-      return;
-    }
-
-    if (isWorker && (!serviceCategory || !serviceLocation)) {
-      alert('Please fill in service category and location');
-      return;
-    }
-
-    const userData = {
-      name: fullname,
-      email: email,
-      password: password,
+    const userData={
+      name:fullname,
+      email:email,
+      password:password,
+      contact:0,
       ...(isWorker && {
-        contact: 0,
-        service: serviceCategory,
-        location: serviceLocation,
-        statuss: "offline"
+        service:serviceCategory,
+        location:serviceLocation,
+        statuss:"offline"
       })
     }
   
-    console.log('Registering user:', { ...userData, password: '***' });
+    console.log('fullname:', fullname);
+    console.log('email:', email);
+    console.log('password:', password);
 
-    const result = await register(userData);
+    try{
+      const response= await fetch("http://localhost:4000/api/adduser",{
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(userData),
+      })
+      const data=await response.json();
 
-    if (result.success) {
-      alert(result.message);
-      console.log('Success:', result.user);
+      if(response.ok){
+        alert('Registration successful!');
+        console.log('Success:',data);
 
-      // Clear form
-      setFullname("");
-      setEmail("");
-      setPassword("");
-      setServiceCategory("");
-      setServiceLocation("");
-      setIsWorker(false);
+        setFullname("");
+        setEmail("");
+        setPassword("");
+        setServiceCategory("");
+        setServiceLocation("");
+        setIsWorker(false);
+        
+      }else{
+        alert("Registration failed: "+data.error);
+        console.log('Error:',data.error);
+        
+      }
+    }catch(error){
+      console.log('Error:',error);
+      alert("An error occurred!");
       
-      // Redirect to login page
-      setTimeout(() => {
-        navigate('/login');
-      }, 1000);
-      
-    } else {
-      alert("Registration failed: " + result.message);
-      console.log('Error:', result.message);
     }
+
   }
 
 
@@ -79,7 +76,29 @@ function Register() {
         
         {/* left side */}
 
-         <div className="w-full bg-gray-100 rounded-xl p-10 shadow-2xl z-50 md:w-[50vw] lg:w-[60vw]">
+        <div className="hidden md:flex min-h-[60vh] lg:flex min-w-[40vw] lg:min-h-[80vh] rounded-xl overflow-hidden items-center justify-center"
+          // bg image
+            style={{ background: "url('https://img.freepik.com/premium-photo/colors-card-template-curve-gradient-abstract-background_608068-9661.jpg?semt=ais_hybrid&w=740&q=80') ", backgroundSize: "cover", backgroundPosition: "center" }}
+         >
+
+        <div className="flex items-center justify-center flex-col px-6">
+         {/* heading */}
+          <h2 className="text-2xl font-bold text-white mb-3">
+            Join FindService Today
+          </h2>
+
+          {/* paragraph */}
+          <p className="text-white max-w-md text-center">
+            Create an account to book trusted local services or register as a
+            professional and grow your business with us.
+          </p>
+          </div>
+
+        </div>
+
+        {/* rigth side */}
+
+           <div className="w-full bg-gray-100 rounded-xl p-10 shadow-2xl z-50 md:w-[50vw] lg:w-[60vw]">
 
           {/* heading */}
           <h2 className="text-3xl md:text-4xl text-gray-800 text-center font-semibold">
@@ -144,7 +163,7 @@ function Register() {
                 onChange={() => setIsWorker(!isWorker)}
                 className="accent-indigo-600"
               />
-              Register as a service provider (Worker)
+              <span className="font-semibold">Register as a service provider </span>
             </label>
 
             {/* Worker Details */}
@@ -156,7 +175,7 @@ function Register() {
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                 <input
                   type="text"
-                  placeholder="Service Category"
+                  placeholder="Service Category "
                   value={serviceCategory}
                   onChange={(e) => setServiceCategory(e.target.value)}
                   className="w-full h-10 px-3 rounded-md border mb-3"
@@ -191,27 +210,8 @@ function Register() {
           </p>
         </div>
 
-        {/* rigth side */}
 
-         <div className="hidden md:flex min-h-[60vh] lg:flex min-w-[40vw] lg:min-h-[80vh] rounded-xl overflow-hidden items-center justify-center"
-          // bg image
-            style={{ background: "url('https://img.freepik.com/premium-photo/colors-card-template-curve-gradient-abstract-background_608068-9661.jpg?semt=ais_hybrid&w=740&q=80') ", backgroundSize: "cover", backgroundPosition: "center" }}
-         >
-
-        <div className="flex items-center justify-center flex-col px-6">
-         {/* heading */}
-          <h2 className="text-2xl font-bold text-white mb-3">
-            Join FindService Today
-          </h2>
-
-          {/* paragraph */}
-          <p className="text-white max-w-md text-center">
-            Create an account to book trusted local services or register as a
-            professional and grow your business with us.
-          </p>
-          </div>
-
-        </div>
+       
       
           
       </div>
