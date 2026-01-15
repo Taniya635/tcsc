@@ -2,7 +2,7 @@
 
 This is the backend application for the Service Finder platform, restructured following clean architecture principles.
 
-## Project Structure
+## Project Structure 
 
 ```
 backend/
