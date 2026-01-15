@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import API_URL from '../config/api';
 
 
 const AuthContext = createContext();
@@ -33,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch("https://service-finder-backend.vercel.app/pages/login", {
+      const response = await fetch(`${API_URL}/pages/login`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -62,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await fetch("https://service-finder-backend.vercel.app/pages/register", {
+      const response = await fetch(`${API_URL}/pages/register`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -86,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch("https://service-finder-backend.vercel.app/pages/logout", {
+      await fetch(`${API_URL}/pages/logout`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'

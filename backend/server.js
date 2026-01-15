@@ -1,3 +1,4 @@
+require('dotenv').config();
 
 const { configureExpress } = require("./src/config/setup/express");
 const { initializeServer } = require("./src/config/setup/setup");

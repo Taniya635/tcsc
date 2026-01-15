@@ -42,12 +42,36 @@ The application follows a layered architecture:
 
 ## Getting Started
 
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB (local or MongoDB Atlas)
+
 ### Installation
 ```bash
 npm install
 ```
 
+### Configuration
+
+1. **Copy environment template:**
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Update `.env` file:**
+   ```env
+   NODE_ENV=development
+   PORT=4000
+   
+   # For local MongoDB:
+   MONGODB_URI=mongodb://localhost:27017/tcsc
+   
+   # For MongoDB Atlas (production):
+   # MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/tcsc?retryWrites=true&w=majority
+   ```
+
 ### Running the Application
+
 ```bash
 # Development mode with auto-reload
 npm run dev
@@ -55,6 +79,33 @@ npm run dev
 # Production mode
 npm start
 ```
+
+## MongoDB Setup
+
+### Local MongoDB
+```bash
+# macOS (using Homebrew)
+brew services start mongodb-community
+```
+
+### MongoDB Atlas (Cloud)
+For production deployment, see [MongoDB Atlas Setup Guide](./MONGODB_ATLAS_SETUP.md)
+
+## Deployment
+
+### Vercel Deployment
+
+1. **Set environment variables in Vercel Dashboard:**
+   - `MONGODB_URI` - Your MongoDB Atlas connection string
+   - `NODE_ENV` - `production`
+   - `PORT` - `4000`
+
+2. **Deploy:**
+   ```bash
+   vercel --prod
+   ```
+
+See [Setup Summary](../SETUP_SUMMARY.md) for more details.
 
 ## API Endpoints
 
@@ -82,11 +133,16 @@ npm start
 ## Database
 
 - **MongoDB** - Database: `tcsc`
-- **Connection**: `mongodb://localhost:27017/tcsc`
+- **Local Connection**: `mongodb://localhost:27017/tcsc`
+- **Production**: MongoDB Atlas (cloud-hosted)
+
+Configuration is managed via environment variables in `.env` file.
 
 ## Dependencies
 
 - **express** - Web framework
 - **mongoose** - MongoDB ODM
 - **cors** - Cross-origin resource sharing
+- **dotenv** - Environment variable management
+- **bcrypt** - Password hashing
 - **nodemon** - Development auto-reload (dev dependency)

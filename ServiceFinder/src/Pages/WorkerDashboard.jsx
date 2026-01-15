@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { HiOutlineUser, HiOutlineBriefcase, HiOutlineLocationMarker, HiOutlineStar, HiOutlineCheckCircle } from 'react-icons/hi';
 import { MdWorkOutline, MdOutlineLocationOn, MdPhoneEnabled } from 'react-icons/md';
 import Footer from '../components/Footer';
+import API_URL from '../config/api';
 
 function WorkerDashboard() {
   const { user, isLoggedIn, isWorker, logout } = useAuth();
@@ -43,7 +44,7 @@ function WorkerDashboard() {
 
     try {
 
-      const statsResponse = await fetch(`https://service-finder-backend.vercel.app/api/worker/stats?workerId=${user._id}`);
+      const statsResponse = await fetch(`${API_URL}/api/worker/stats?workerId=${user._id}`);
       const statsData = await statsResponse.json();
       
       if (statsData.success) {
@@ -51,7 +52,7 @@ function WorkerDashboard() {
       }
 
 
-      const bookingsResponse = await fetch(`https://service-finder-backend.vercel.app/api/worker/bookings?workerId=${user._id}`);
+      const bookingsResponse = await fetch(`${API_URL}/api/worker/bookings?workerId=${user._id}`);
       const bookingsData = await bookingsResponse.json();
       
       if (bookingsData.success) {
@@ -66,7 +67,7 @@ function WorkerDashboard() {
     if (!user?._id) return;
 
     try {
-      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/status`, {
+      const response = await fetch(`${API_URL}/api/worker/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -119,7 +120,7 @@ function WorkerDashboard() {
 
   const handleAcceptBooking = async (bookingId) => {
     try {
-      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/booking/accept`, {
+      const response = await fetch(`${API_URL}/api/worker/booking/accept`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingId })
@@ -141,7 +142,7 @@ function WorkerDashboard() {
 
   const handleRejectBooking = async (bookingId) => {
     try {
-      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/booking/reject`, {
+      const response = await fetch(`${API_URL}/api/worker/booking/reject`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingId })
@@ -163,7 +164,7 @@ function WorkerDashboard() {
 
   const handleCompleteBooking = async (bookingId) => {
     try {
-      const response = await fetch(`https://service-finder-backend.vercel.app/api/worker/booking/complete`, {
+      const response = await fetch(`${API_URL}/api/worker/booking/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingId })

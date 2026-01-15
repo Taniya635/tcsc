@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { IoSearch } from "react-icons/io5";
 import Card from '../components/Card';
 import Footer from '../components/Footer';
+import API_URL from '../config/api';
 
 function Service() {
 
@@ -30,7 +31,7 @@ function Service() {
       if (filters.statuss) params.append('statuss', filters.statuss);
       if (search) params.append('name', search);
 
-      const response = await fetch(`https://service-finder-backend.vercel.app/api/users?${params}`);
+      const response = await fetch(`${API_URL}/api/users?${params}`);
       const data = await response.json();
       setServicesData(data.users || []);
     } catch (error) {

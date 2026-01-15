@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { HiOutlineUser, HiOutlineMail, HiOutlineBookmark, HiOutlineHeart, HiOutlineClock } from 'react-icons/hi';
 import { MdWorkOutline } from 'react-icons/md';
 import Footer from '../components/Footer';
+import API_URL from '../config/api';
 
 function UserDashboard() {
   const { user, isLoggedIn, isWorker } = useAuth();
@@ -33,7 +34,7 @@ function UserDashboard() {
 
     try {
 
-      const statsResponse = await fetch(`https://service-finder-backend.vercel.app/api/user/stats?userId=${user._id}`);
+      const statsResponse = await fetch(`${API_URL}/api/user/stats?userId=${user._id}`);
       const statsData = await statsResponse.json();
       
       if (statsData.success) {
@@ -46,7 +47,7 @@ function UserDashboard() {
       }
 
 
-      const bookingsResponse = await fetch(`https://service-finder-backend.vercel.app/api/user/bookings?userId=${user._id}`);
+      const bookingsResponse = await fetch(`${API_URL}/api/user/bookings?userId=${user._id}`);
       const bookingsData = await bookingsResponse.json();
       
       if (bookingsData.success) {
@@ -54,7 +55,7 @@ function UserDashboard() {
       }
 
 
-      const savedResponse = await fetch(`https://service-finder-backend.vercel.app/api/user/saved-services?userId=${user._id}`);
+      const savedResponse = await fetch(`${API_URL}/api/user/saved-services?userId=${user._id}`);
       const savedData = await savedResponse.json();
       
       if (savedData.success) {
@@ -82,7 +83,7 @@ function UserDashboard() {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`https://service-finder-backend.vercel.app/api/user/booking/cancel`, {
+      const response = await fetch(`${API_URL}/api/user/booking/cancel`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
