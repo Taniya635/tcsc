@@ -10,7 +10,6 @@ Service Finder is a modern marketplace platform that simplifies the process of f
 - **TailwindCSS 4**: Utility-first CSS framework for rapid UI development
 - **React Router DOM**: Client-side routing and navigation
 - **React Icons**: Comprehensive icon library
-- **Swiper**: Touch-enabled slider/carousel component
 - **Context API**: State management for authentication and user data
 
 ### Backend
@@ -19,7 +18,6 @@ Service Finder is a modern marketplace platform that simplifies the process of f
 - **MongoDB**: NoSQL database for flexible data storage
 - **Mongoose**: Elegant MongoDB object modeling
 - **bcrypt**: Secure password hashing
-- **JWT**: Token-based authentication
 - **CORS**: Cross-Origin Resource Sharing support
 - **dotenv**: Environment variable management
 
